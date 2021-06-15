@@ -20,12 +20,13 @@
 </div>
 @code {
     [CascadingParameter] private IModalService Modal { get; set; }
+    [CascadingParameter]  BlazoredModalInstance ModalInstance { get; set; }
     private async Task OpenLoginModal()
     {
-        Modal.Show<LoginComponent>();
+        Modal.Show<LoginComponent>("Login");
     }
     private async Task OpenRegisterModal()
     {
-        Modal.Show<RegisterComponent>();
+        Modal.Show<RegisterComponent>("Register");
     }
 }

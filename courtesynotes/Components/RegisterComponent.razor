@@ -1,0 +1,27 @@
+﻿@using courtesynotes.Data
+@using courtesynotes.Models
+@inject NavigationManager NavManager
+
+<h3>Register</h3>
+<EditForm Model="User" OnValidSubmit="HandleValidSubmit">
+    <label for="inputEmail">Email</label>
+    <input type="text" id="inputEmail" @bind-value="User.Email" />
+    <label for="inputPassword">Password</label>
+    <input type="password" @bind-value="User.Password" />
+    <input type="submit" />
+</EditForm>
+
+@code {
+    private UserHandelingService UserHandelingService = new();
+    private UserModel User = new();
+    private string status;
+
+    private async Task HandleValidSubmit()
+    {
+        var register = await UserHandelingService.AddUser(User.Email, User.Password);
+        if (register == true)
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+}

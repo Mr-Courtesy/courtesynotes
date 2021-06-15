@@ -6,19 +6,8 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
-<button @onclick="() => Login()">Login</button>
-<button @onclick="() => Register()">Register</button>
+
 
 @code {
-    [CascadingParameter] private IModalService Modal { get; set; }
-    private UserHandelingService UserHandelingService = new();
-    private async Task Login()
-    {
-        Modal.Show<LoginComponent>();
-    }
-    private async Task Register()
-    {
-        Modal.Show<RegisterComponent>();
-    }
+    
 }

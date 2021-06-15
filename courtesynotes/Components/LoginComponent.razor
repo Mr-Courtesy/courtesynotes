@@ -2,22 +2,23 @@
 @using courtesynotes.Data
 @inject NavigationManager NavManager
 
-<h3>Login</h3>
-
-<EditForm Model="user" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="user" OnValidSubmit="HandleValidSubmit" class="userForm-modal">
     <DataAnnotationsValidator />
+    <ValidationSummary></ValidationSummary>
     <label for="inputEmail">Email</label>
     <input type="text" @bind-value="user.Email" id="inputEmail" />
     <label for="inputPassword">Password</label>
     <input type="password" @bind-value="user.Password" />
-    <input type="submit" />
-    @status
-    <ValidationSummary />
+    <button type="submit" class="login-button">Login</button>
+    <p class="lead register-prompt">Don't have an account? Register <a href="" @onclick="ShowRegisterModal">here</a> to get started!</p>
 </EditForm>
+
 @code {
     private UserModel user = new();
     private string status;
-    UserHandelingService UserHandelingService = new();
+    private UserHandelingService UserHandelingService = new();
+    [CascadingParameter] private IModalService Modal { get; set; }
+    [CascadingParameter] private BlazoredModalInstance ModalInstance { get; set; }
     private async Task HandleValidSubmit()
     {
         var login = await UserHandelingService.LoginUser(user.Email, user.Password);
@@ -27,7 +28,12 @@
         }
         else if (login == true)
         {
-            NavManager.NavigateTo("/");
+            @*NavManager.NavigateTo("/");*@
         }
+    }
+    private async Task ShowRegisterModal()
+    {
+        await ModalInstance.CloseAsync();
+        Modal.Show<RegisterComponent>("Register an account");
     }
 }

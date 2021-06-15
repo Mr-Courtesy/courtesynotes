@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@inject Blazored.SessionStorage.ISessionStorageService StorageService
+@using courtesynotes.Components
 
 <div class="page">
     <div class="sidebar">
@@ -7,7 +9,8 @@
 
     <div class="main">
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <a class="login-modal oi-account-login" @onclick="() => OpenLoginModal()">Login</a>
+            <a class="register-modal oi-account-login" @onclick="() => OpenRegisterModal()">Register</a>
         </div>
 
         <div class="content px-4">
@@ -15,3 +18,14 @@
         </div>
     </div>
 </div>
+@code {
+    [CascadingParameter] private IModalService Modal { get; set; }
+    private async Task OpenLoginModal()
+    {
+        Modal.Show<LoginComponent>();
+    }
+    private async Task OpenRegisterModal()
+    {
+        Modal.Show<RegisterComponent>();
+    }
+}

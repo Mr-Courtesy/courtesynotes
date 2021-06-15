@@ -2,16 +2,20 @@
 @using courtesynotes.Models
 @inject NavigationManager NavManager
 
-<h3>Register</h3>
-<EditForm Model="User" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="User" OnValidSubmit="HandleValidSubmit" class="userForm-modal">
+    <DataAnnotationsValidator />
+    <ValidationSummary></ValidationSummary>
     <label for="inputEmail">Email</label>
-    <input type="text" id="inputEmail" @bind-value="User.Email" />
+    <input type="text" @bind-value="User.Email" id="inputEmail" />
     <label for="inputPassword">Password</label>
     <input type="password" @bind-value="User.Password" />
-    <input type="submit" />
+    <button type="submit" class="login-button">Register</button>
+    <p class="lead register-prompt">Already have an account? Login <a href="" @onclick="ShowLoginModal">here</a> to access your notes!</p>
 </EditForm>
 
 @code {
+    [CascadingParameter] IModalService Modal { get; set; }
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
     private UserHandelingService UserHandelingService = new();
     private UserModel User = new();
     private string status;
@@ -23,5 +27,10 @@
         {
             NavManager.NavigateTo("/");
         }
+    }
+    private async Task ShowLoginModal()
+    {
+        await ModalInstance.CloseAsync();
+        Modal.Show<LoginComponent>("Login");
     }
 }

@@ -1,9 +1,7 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager NavManager
 @inject Blazored.SessionStorage.ISessionStorageService StorageService
 @using courtesynotes.Components
-@using courtesynotes.Models
- 
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -11,15 +9,8 @@
 
     <div class="main">
         <div class="top-row px-4">
-            @if (SessionModel.Authorized == false)
-            {
-                <a class="login-modal oi-account-login" @onclick="() => OpenLoginModal()">Login</a>
-                <a class="register-modal oi-account-login" @onclick="() => OpenRegisterModal()">Register</a>
-            }
-            else
-            {
-                <a class="login-modal" @onclick="() => LogoutSession()">Logout</a>
-            }
+            <a class="login-modal oi-account-login" @onclick="() => OpenLoginModal()">Login</a>
+            <a class="register-modal oi-account-login" @onclick="() => OpenRegisterModal()">Register</a>
         </div>
 
         <div class="content px-4">
@@ -37,11 +28,5 @@
     private async Task OpenRegisterModal()
     {
         Modal.Show<RegisterComponent>("Register");
-    }
-    private async Task LogoutSession()
-    {
-        await StorageService.ClearAsync();
-        SessionModel.Authorized = false;
-        NavManager.NavigateTo("/");
     }
 }

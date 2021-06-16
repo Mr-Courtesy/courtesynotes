@@ -14,7 +14,7 @@ namespace courtesynotes
     {
         public static void Main(string[] args)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "courtesy-notes-firebase-adminsdk-d43ob-db369f902d.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "courtesy-notes-firebase-adminsdk-d43ob-2f27f8a106.json");
             CreateHostBuilder(args).Build().Run();
         }
 

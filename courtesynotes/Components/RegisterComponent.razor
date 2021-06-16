@@ -1,6 +1,9 @@
 ﻿@using courtesynotes.Data
 @using courtesynotes.Models
+@using Blazored.SessionStorage
+ 
 @inject NavigationManager NavManager
+@inject ISessionStorageService StorageService
 
 <EditForm Model="User" OnValidSubmit="HandleValidSubmit" class="userForm-modal">
     <DataAnnotationsValidator />
@@ -25,7 +28,9 @@
         var register = await UserHandelingService.AddUser(User.Email, User.Password);
         if (register == true)
         {
-            NavManager.NavigateTo("/");
+            SessionModel.Authorized = true;
+            await StorageService.SetItemAsync("_username", User.Email);
+            NavManager.NavigateTo("/dashboard", true);
         }
     }
     private async Task ShowLoginModal()

@@ -1,8 +1,11 @@
 ﻿@using courtesynotes.Models
 @using courtesynotes.Data
+@using Blazored.SessionStorage 
 @inject NavigationManager NavManager
+@inject ISessionStorageService StorageService
 
 <EditForm Model="user" OnValidSubmit="HandleValidSubmit" class="userForm-modal">
+    @status
     <DataAnnotationsValidator />
     <ValidationSummary></ValidationSummary>
     <label for="inputEmail">Email</label>
@@ -24,11 +27,13 @@
         var login = await UserHandelingService.LoginUser(user.Email, user.Password);
         if (login == false)
         {
-            status = "Correct credentials";
+            status = "Email or password is incorrect";
         }
         else if (login == true)
         {
-            @*NavManager.NavigateTo("/");*@
+            SessionModel.Authorized = true;
+            await StorageService.SetItemAsync("_username", user.Email);
+            NavManager.NavigateTo("/dashboard", true);
         }
     }
     private async Task ShowRegisterModal()

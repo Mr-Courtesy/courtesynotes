@@ -1,0 +1,14 @@
+﻿@page "/dashboard"
+@inherits DashboardBase
+@using courtesynotes.Models
+
+<h3>Dashboard</h3>
+
+@if (SessionModel.Authorized == false)
+{
+    <h1>You need to be logged in to view this page.</h1>
+}
+else if (SessionModel.Authorized == true)
+{
+    @SessionEmail
+}

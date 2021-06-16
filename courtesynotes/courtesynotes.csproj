@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="courtesy-notes-firebase-adminsdk-d43ob-2f27f8a106.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
     <PackageReference Include="Blazored.SessionStorage" Version="2.1.0" />
     <PackageReference Include="Google.Cloud.Firestore" Version="2.4.0" />

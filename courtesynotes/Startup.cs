@@ -30,7 +30,6 @@ namespace courtesynotes
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddBlazoredModal();
             services.AddBlazoredSessionStorage();
         }

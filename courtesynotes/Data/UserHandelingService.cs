@@ -28,8 +28,8 @@ namespace courtesynotes.Data
                     {"email", email },
                     {"password", password }
                 };
-
-                await reference.AddAsync(newUser);
+                
+                await reference.Document(email).SetAsync(newUser);
                 return true;
             }
             return false;
@@ -57,6 +57,28 @@ namespace courtesynotes.Data
                 return false;
             }
             return false;
+        }
+        public static async Task<bool> AddCourse(string email, string courseName)
+        {
+            CollectionReference usersCollection = DbHandelingService.ReferenceUsersCollection();
+            var courses = usersCollection.Document(email).Collection("Courses");
+            QuerySnapshot coursesSnapshot = await courses.GetSnapshotAsync();
+
+            var existingCourse = coursesSnapshot.FirstOrDefault(c => c.Id == courseName);
+            if (existingCourse != null)
+            {
+                return false;
+            }
+            else
+            {
+                Dictionary<string, object> _course = new()
+                {
+                    { "name", courseName }
+                };
+
+                await courses.Document(courseName).SetAsync(_course);
+                return true;
+            }
         }
     }
 }

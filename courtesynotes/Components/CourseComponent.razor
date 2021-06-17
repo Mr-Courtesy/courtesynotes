@@ -1,0 +1,19 @@
+﻿@using courtesynotes.Models
+@using courtesynotes.Data
+@using Blazored.SessionStorage 
+
+<EditForm Model="CourseModel" OnValidSubmit="AddCourse">
+    <label for="inputCourseName">Course/subject name</label>
+    <input type="text" @bind-value="CourseModel.Name" id="inputCourseName"/>
+    <button type="submit">Add</button>
+</EditForm>
+@code {
+    [Inject] private ISessionStorageService StorageService { get; set; }
+    private CourseModel CourseModel = new();
+
+    private async Task AddCourse()
+    {
+        string email = await StorageService.GetItemAsync<string>("_username");
+        await UserHandelingService.AddCourse(email, CourseModel.Name);
+    }
+}

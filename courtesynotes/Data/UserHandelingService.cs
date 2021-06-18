@@ -80,5 +80,18 @@ namespace courtesynotes.Data
                 return true;
             }
         }
+        public static async Task<List<string>> GetCourses(string email)
+        {
+            List<string> courseNames = new();
+            CollectionReference usersCollection = DbHandelingService.ReferenceUsersCollection();
+            var courses = usersCollection.Document(email).Collection("Courses");
+            QuerySnapshot coursesSnapshot = await courses.GetSnapshotAsync();
+
+            foreach (var c in coursesSnapshot)
+            {
+                courseNames.Add(c.Id);
+            }
+            return courseNames;
+        }
     }
 }

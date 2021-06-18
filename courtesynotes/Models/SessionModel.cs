@@ -8,5 +8,6 @@ namespace courtesynotes.Models
     public static class SessionModel
     {
         public static bool Authorized { get; set; } = false;
+        public static string ActiveDocument { get; set; }
     }
 }

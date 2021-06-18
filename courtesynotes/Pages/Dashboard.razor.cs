@@ -20,13 +20,26 @@ namespace courtesynotes.Pages
         [Inject] protected IModalService ModalService { get; set; }
         protected string SessionEmail;
         protected string CourseName;
+        protected List<string> Courses = new();
         protected override async Task OnInitializedAsync()
         {
             SessionEmail = await StorageService.GetItemAsync<string>("_username");
+            if (SessionModel.Authorized == true)
+            {
+                await GetCourses();
+            }
         }
         protected async Task AddCourse()
         {
             Modal.Show<CourseComponent>("Add a course");
+        }
+        protected async Task GetCourses()
+        {
+            var c = await UserHandelingService.GetCourses(SessionEmail);
+            foreach (var course in c)
+            {
+                Courses.Add(course);
+            }
         }
     }
 }

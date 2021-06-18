@@ -11,5 +11,10 @@
 else if (SessionModel.Authorized == true)
 {
     @SessionEmail
-    <button @onclick="() => AddCourse()"></button>
+    <button @onclick="() => AddCourse()">Add course</button>
+    <h1>Your courses</h1>
+    @foreach (var course in Courses)
+    {
+        <h3>@course</h3>
+    }
 }
